@@ -21,7 +21,7 @@
 
 - Activate the virtualenv
 
-    ```Source venv/Scripts/activate```
+    ```/venv/Scripts/activate```
 
 - Install the requirements
 
@@ -30,6 +30,10 @@
 - Apply migrations
 
     ```python manage.py migrate```
+
+- Apply collectstatic
+
+    ```python manage.py collectstatic```
 
 - Start the server
 

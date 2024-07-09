@@ -1,0 +1,95 @@
+{% extends 'base.html' %}
+{% block title %}Login{% endblock title %}
+{% block navigation %}
+<div style="display: flex; align-items: center;">
+  <p class="m-0 mr-3"> welcome {{ user.username }}</p>
+  <a href="{% url 'logout' %}" class="mr-3">logout</a>
+</div>
+{% endblock navigation %}
+{% block content %}
+<div class="content-container overflow-auto p p-2"
+  style="display: flex; flex-direction : column; align-items: center; width: 100%; max-width: 100%;">
+  <div class="form-container mt-3" style="width: 90%; max-width: 90%;">
+    <h1>Add Note</h1>
+    <form method="post" class="w-100">
+      {% csrf_token %}
+      <div class="form-group mr-3 ml-3">{{ form.title }}</div>
+      <div class="form-group mr-3 ml-3">{{ form.body }}</div>
+      <button type="submit" class="btn btn-primary ml-3 mb-3">Add Note</button>
+    </form>
+  </div>
+  <div class="form-container mt-3 mb-3 p-2" style="width: 90%; max-width: 90%;">
+    <h1>Notes</h1>
+    <!-- create table for notes  -->
+    <table class="table" style="width: 100%;">
+      <thead>
+        <tr>
+          <th>Title</th>
+          <th>Body</th>
+          <th></th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for note in page_obj %}
+        <tr>
+          <td id="title-{{note.id}}">{{ note.title }}</td>
+          <td id="body-{{note.id}}">{{ note.body }}</td>
+          <td onclick="showEditModal('{{ note.id }}')"><a>Edit</a></td>
+          <td><a href="?id={{ note.id }}&action=delete">Delete</a></td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+
+    <div class="pagination">
+      <span class="step-links">
+        {% if page_obj.has_previous %}
+        <a href="?page=1">&laquo; first</a>
+        <a href="?page={{ page_obj.previous_page_number }}">previous</a>
+        {% endif %}
+
+        <span class="current">
+          Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}.
+        </span>
+
+        {% if page_obj.has_next %}
+        <a href="?page={{ page_obj.next_page_number }}">next</a>
+        <a href="?page={{ page_obj.paginator.num_pages }}">last &raquo;</a>
+        {% endif %}
+      </span>
+    </div>
+  </div>
+  <!-- Modal -->
+  <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
+    aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLongTitle">Edit Note</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <form method="post" class="w-100" id="edit-form">
+            {% csrf_token %}
+            <input type="hidden" name="note_id" id="note_id">
+            <div class="form-group mr-3 ml-3">
+              <input type="text" name="title" id="edit-title" class="form-control">
+            </div>
+            <div class="form-group mr-3 ml-3">
+              <textarea type="text" name="body" id="edit-body" class="form-control"></textarea>
+            </div>
+            <button type="submit" class="btn btn-primary ml-3 mb-3">Submit</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <button type="button" data-toggle="modal" data-target="#exampleModalCenter" id="btnModal" style="display: none;">
+    Launch demo modal
+  </button>
+</div>
+{% endblock content %}

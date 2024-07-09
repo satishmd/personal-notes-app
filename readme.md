@@ -5,6 +5,12 @@
 
 ### Manual
 
+- create a projects folder
+   
+   ```mkdir projects```
+
+- go to projects folder
+
 - clone the repo
 
 - Go to the project path
@@ -32,6 +38,12 @@
     - Server will start at 8000 port http://localhost:8000/
 
 ### Docker
+
+- create a projects folder
+   
+   ```mkdir projects```
+
+- go to projects folder
 
 - clone the repo
 

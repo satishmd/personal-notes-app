@@ -11,7 +11,7 @@ COPY requirements.txt ./requirement.txt
 # Install any needed package specified in requirements.txt
 RUN pip install -r ./requirement.txt
 
-WORKDIR /projects/llm-scripts/fraud_investigation
-COPY . /projects/llm-scripts/fraud_investigation
+WORKDIR /projects/personal_notes_app
+COPY . /projects/personal_notes_app
 
 CMD ["bash", "-c", "python manage.py runserver 0.0.0.0:8000"]
